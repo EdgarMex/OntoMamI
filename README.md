@@ -3,6 +3,7 @@ OntoMamI: Towards a Semantic Interoperability Ontology-Framework for Breast Canc
 
 OntoMamI: Ontología para Mamografía BI-RADS
 License
+<img width="82" height="20" alt="image" src="https://github.com/user-attachments/assets/f66b450f-89ac-47d4-b65f-bd53385c42b0" />
 
 OntoMamI es un prototipo mínimo viable (MVP) de una ontología operativa entre ontologías para Cáncer de Mama, integrada con BI-RADS y conectada a HL7 FHIR Foundation. El objetivo es facilitar la interoperabilidad entre ontologías clínicas y datos de imageología (BI-RADS), con soporte para serialización FHIR R5, lectura de DICOM, generación de expedientes sintéticos (Diego), razonamiento y consultas SPARQL.
 
