@@ -1,5 +1,4 @@
-# OntoMamI
-OntoMamI: Towards a Semantic Interoperability Ontology-Framework for Breast Cancer
+# OntoMamI: Towards a Semantic Interoperability Ontology-Framework for Breast Cancer
 <img width="82" height="20" alt="image" src="https://github.com/user-attachments/assets/ac236fd9-5abd-4ba8-ab42-0e8dd848fb22" />
 
 OntoMamI is a minimum viable prototype (MVP) of an operational ontology between ontologies for breast cancer, integrated with BI-RADS and connected to HL7 FHIR Foundation. The goal is to facilitate interoperability between clinical ontologies and imaging data (BI-RADS), with support for FHIR R5 serialization, DICOM reading, synthetic record generation (Diego), reasoning, and SPARQL queries.
@@ -143,20 +142,121 @@ Artifact files: owl, fhir_profiles, diego, dicom, reasoning, rdf_store
 Contact
 MVP author: EdgarMex
 Communication channel: repository Issues and Pull Requests
-Email (optional): contact@example.com
+Email: ecastillo@uaslp.mx
 Final notes
 
-Check that the license badge is displayed correctly in the header.
 Verify that the links point to the correct OntoMamI repository.
-If you want, I can adapt the content to add usage examples, installation steps with exact GitHub Actions commands for CI/CD, or a file index with full paths. Would you like me to add any of these?
-
-Yes, add exact GitHub Actions commands for CI/CD
-Sider Fusion
-Perfect! I'll add a proposed CI/CD workflow for OntoMamI using GitHub Actions. It includes:
 
 Structure validation and basic README linting.
 Validation of key files (LICENSE, CODE_OF_CONDUCT.md, README.md).
 Basic RDF/OWL validation using an available command line client (robolectric? no). To avoid heavy dependencies, we will do a simple validation: check that TTL/Owl files exist and are not empty; optionally run a Python script if you want to validate RDF lite.
 Optional tests: if you have tests, they can be run; here is a skeleton so you can add them.
 CI/CD plan with GitHub Actions
+Enable CI on pushes to main and PRs to main.
+Jobs:
+setup: Install Python and optional dependencies.
+lint-readme: Verify the presence of README.md and license badge.
+validate-files: Confirm LICENSE, CODE_OF_CONDUCT.md, README.md, and expected structures.
+optional-tests: Placeholder for RDF/OWL tests if you add tests.
+File: .github/workflows/ci-ontomami.yml (proposed content)
+
+yaml
+name: OntoMamI CI
+
+on: 
+push: 
+branches: 
+-main 
+pull_request: 
+branches: 
+- main
+
+jobs: 
+validate-structure: 
+runs-on: ubuntu-latest 
+steps: 
+- name: Checkout 
+uses: actions/checkout@v3 
+
+- name: Set up Python 
+uses: actions/setup-python@v5 
+with: 
+python-version: '3.11' 
+
+- name: Validate essential files exist 
+run: | 
+set -e 
+REQUIRED_FILES=(LICENSE CODE_OF_CONDUCT.md README.md) 
+for f in "${REQUIRED_FILES[@]}"; do 
+if [ ! -f "$f" ]; then echo "Missing $f"; exit 1; fi 
+donated 
+echo "All required files present" 
+
+- name: Validate README badge reference 
+run: | 
+if ! grep -q "https://img.shields.io/badge/License-MIT-blue.svg" README.md; then 
+echo "Warning: MIT badge not found in README. Consider adding a LICENSE badge." 
+# exit 1 # uncomment if you want to demand the badge 
+fi 
+echo "README badge check completed" 
+
+lint-readme: 
+runs-on: ubuntu-latest 
+steps: 
+- name: Checkout 
+uses: actions/checkout@v3 
+
+- name: Lint README (simple sanity) 
+run: | 
+python -m pip install --upgrade pip 
+python -m pip install PyYAML # if you need parsing 
+# Simple example: verify that there is a table of contents 
+if ! grep -qi "^##" README.md; then
+echo "README.md: No clearly highlighted sections (header indicators)."
+exit 1
+fi
+echo "README sanity check passed"
+
+optional-tests:
+runs-on: ubuntu-latest
+if: always() # always runs; can be disabled if there are no tests
+steps:
+- name: Checkout
+uses: actions/checkout@v3
+
+- name: Set up Python
+uses: actions/setup-python@v5
+with:
+python-version: '3.11'
+
+- name: Install dev dependencies (optional)
+run: |
+python -m pip install --upgrade pip
+# Add dependencies if you have RDF validation scripts
+# e.g., rdflib, pySHACL, click, etc.
+pip install rdflib pySHACL
+
+- name: Run optional RDF/OWL validations (example)
+run: |
+echo "Running optional validations (customize as needed)"
+
+# Example: verify that TTL/owl is not empty
+for f in owl/*.ttl; do
+if [ -s "$f" ]; then
+echo "Validated $f (non-empty)"
+else
+echo "Warning: $f is empty"
+exit 1
+fi
+done
+
+Notes and Recommendations
+
+This workflow is a starting point. You can improve it with specific tools:
+RDF validation with PySHACL if you define SHACL shapes (pip install pyshacl) and run a script that validates your RDFs.
+Lint for Turtle/OWL with tools like rapper (Raptor) or rapper-cli if you want stricter RDF validation.
+Add a release job:
+Create a release when merging to main (v0.1.0 tag). You can use actions/create-release and actions/upload-release-asset to package artifacts.
+Security:
+Make sure you don't expose credentials in workflows. Use GitHub Actions secrets if you need access to services (Virtuoso, etc.).
 
