@@ -77,18 +77,6 @@ Create a Conda environment (optional) for Python and RDF tools.
 Install DICOM and RDF dependencies.
 Initial steps
 
-Clone the repository:
-git clone https://github.com/EdgarMex/OntoMamI.git
-cd OntoMamI
-Set up environments and dependencies (optional with conda):
-conda create -n ontomami python=3.11
-conda activate ontomami
-pip install pydicom rdflib pyshex shapely prck [adjust as needed]
-Test DICOM reading:
-python dicom/read_dicom_example.py path_to_sample_dicom.dcm
-Generate Diego in JSON:
-python -m diego generate_synthetic --output diego_synthetic.json
-or use the examples provided diego/diego_synthetic.json
 Validate SHACL:
 pySHACL orients shapes against RDF/Turtle data.
 SPARQL queries:
