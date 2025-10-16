@@ -1,0 +1,776 @@
+@prefix : <http://ontobci.org/ontology#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sct: <http://snomed.info/id/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix bcio: <http://bcio.org/ontology#> .
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix loinc: <http://loinc.org/rdf#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://ontobci.org/ontology#> .
+
+<http://ontobci.org/ontology#> rdf:type owl:Ontology ;
+                                dcterms:created "2025-09-29"^^xsd:date ;
+                                dcterms:creator """Author: Francisco Edgar Castillo Barrera
+Co-authors: Jose Emilio Labra Gayo""" ;
+                                dcterms:description "An interoperability-focused ontology for breast cancer integrating multiple standards and data sources"@en ;
+                                dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+                                dcterms:title "Breast Cancer Interoperability Ontology"@en ,
+                                              "Ontología de Interoperabilidad para Cáncer de Mama"@es ;
+                                owl:versionInfo "1.0.0" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://ontobci.org/ontology#evidenceLevel
+:evidenceLevel rdf:type owl:AnnotationProperty .
+
+
+###  http://ontobci.org/ontology#fhirProfile
+:fhirProfile rdf:type owl:AnnotationProperty ;
+             rdfs:comment "URL of the FHIR profile for serialization"@en ;
+             rdfs:label "FHIR profile"@en ,
+                        "perfil FHIR"@es .
+
+
+###  http://ontobci.org/ontology#hasICD11Code
+:hasICD11Code rdf:type owl:AnnotationProperty ;
+              rdfs:label "has ICD-11 code"@en ,
+                         "tiene código ICD-11"@es .
+
+
+###  http://ontobci.org/ontology#hasLOINCCode
+:hasLOINCCode rdf:type owl:AnnotationProperty ;
+              rdfs:label "has LOINC code"@en ,
+                         "tiene código LOINC"@es .
+
+
+###  http://ontobci.org/ontology#hasNCItMapping
+:hasNCItMapping rdf:type owl:AnnotationProperty ;
+                rdfs:comment "Maps to NCI Thesaurus concept code"@en ;
+                rdfs:label "has NCI Thesaurus mapping"@en ,
+                           "tiene mapeo NCI Thesaurus"@es .
+
+
+###  http://ontobci.org/ontology#hasRxNormCode
+:hasRxNormCode rdf:type owl:AnnotationProperty ;
+               rdfs:label "has RxNorm code"@en ,
+                          "tiene código RxNorm"@es .
+
+
+###  http://ontobci.org/ontology#hasSNOMEDMapping
+:hasSNOMEDMapping rdf:type owl:AnnotationProperty ;
+                  rdfs:comment "Maps to SNOMED CT concept identifier"@en ;
+                  rdfs:label "has SNOMED CT mapping"@en ,
+                             "tiene mapeo SNOMED CT"@es .
+
+
+###  http://ontobci.org/ontology#minPercentage
+:minPercentage rdf:type owl:AnnotationProperty .
+
+
+###  http://ontobci.org/ontology#minValue
+:minValue rdf:type owl:AnnotationProperty .
+
+
+###  http://ontobci.org/ontology#threshold
+:threshold rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+skos:definition rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://ontobci.org/ontology#contraindicatedWith
+:contraindicatedWith rdf:type owl:ObjectProperty ;
+                     rdfs:domain :Treatment ;
+                     rdfs:range :Treatment ;
+                     rdfs:label "contraindicado con"@es ,
+                                "contraindicated with"@en .
+
+
+###  http://ontobci.org/ontology#hasBiomarker
+:hasBiomarker rdf:type owl:ObjectProperty ;
+              rdfs:domain :BreastCancerDiagnosis ;
+              rdfs:range :Biomarker ;
+              rdfs:label "has biomarker"@en ,
+                         "tiene biomarcador"@es .
+
+
+###  http://ontobci.org/ontology#hasGeneticVariant
+:hasGeneticVariant rdf:type owl:ObjectProperty ;
+                   rdfs:domain :ClinicalEntity ;
+                   rdfs:range :GeneticVariant ;
+                   rdfs:label "has genetic variant"@en ,
+                              "tiene variante genética"@es .
+
+
+###  http://ontobci.org/ontology#hasReceptorStatus
+:hasReceptorStatus rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :hasBiomarker ;
+                   rdfs:range :ReceptorStatus ;
+                   rdfs:label "has receptor status"@en ,
+                              "tiene estado de receptor"@es .
+
+
+###  http://ontobci.org/ontology#hasStage
+:hasStage rdf:type owl:ObjectProperty ;
+          rdfs:domain :BreastCancerDiagnosis ;
+          rdfs:range :CancerStage ;
+          rdfs:label "has stage"@en ,
+                     "tiene estadio"@es .
+
+
+###  http://ontobci.org/ontology#indicatedFor
+:indicatedFor rdf:type owl:ObjectProperty ;
+              rdfs:domain :Treatment ;
+              rdfs:range :BreastCancerDiagnosis ;
+              rdfs:label "indicado para"@es ,
+                         "indicated for"@en .
+
+
+###  http://ontobci.org/ontology#targetBiomarker
+:targetBiomarker rdf:type owl:ObjectProperty ;
+                 rdfs:domain :TargetedTherapy ;
+                 rdfs:range :Biomarker ;
+                 rdfs:label "biomarcador objetivo"@es ,
+                            "target biomarker"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://ontobci.org/ontology#acmgClassification
+:acmgClassification rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :GeneticVariant ;
+                    rdfs:range xsd:string ;
+                    rdfs:label "ACMG classification"@en ,
+                               "clasificación ACMG"@es .
+
+
+###  http://ontobci.org/ontology#clinicalSignificance
+:clinicalSignificance rdf:type owl:DatatypeProperty ;
+                      rdfs:domain :GeneticVariant ;
+                      rdfs:range xsd:string ;
+                      rdfs:label "clinical significance"@en ,
+                                 "significancia clínica"@es .
+
+
+###  http://ontobci.org/ontology#fishRatio
+:fishRatio rdf:type owl:DatatypeProperty ;
+           rdfs:domain :HER2Status ;
+           rdfs:range xsd:decimal .
+
+
+###  http://ontobci.org/ontology#hasCOSMICID
+:hasCOSMICID rdf:type owl:DatatypeProperty ;
+             rdfs:domain :GeneticVariant ;
+             rdfs:range xsd:string ;
+             rdfs:label "has COSMIC ID"@en ,
+                        "tiene ID COSMIC"@es .
+
+
+###  http://ontobci.org/ontology#hasClinVarID
+:hasClinVarID rdf:type owl:DatatypeProperty ;
+              rdfs:domain :GeneticVariant ;
+              rdfs:range xsd:string ;
+              rdfs:label "has ClinVar ID"@en ,
+                         "tiene ID ClinVar"@es .
+
+
+###  http://ontobci.org/ontology#hasGeneSymbol
+:hasGeneSymbol rdf:type owl:DatatypeProperty ;
+               rdfs:domain :GeneticVariant ;
+               rdfs:range xsd:string ;
+               rdfs:label "has gene symbol"@en ,
+                          "tiene símbolo del gen"@es .
+
+
+###  http://ontobci.org/ontology#hasHGVS
+:hasHGVS rdf:type owl:DatatypeProperty ;
+         rdfs:domain :GeneticVariant ;
+         rdfs:range xsd:string ;
+         rdfs:label "has HGVS notation"@en ,
+                    "tiene notación HGVS"@es .
+
+
+###  http://ontobci.org/ontology#hasMComponent
+:hasMComponent rdf:type owl:DatatypeProperty ;
+               rdfs:domain :TNMStage ;
+               rdfs:range xsd:string ;
+               rdfs:label "has M component"@en ,
+                          "tiene componente M"@es .
+
+
+###  http://ontobci.org/ontology#hasNCBIGeneID
+:hasNCBIGeneID rdf:type owl:DatatypeProperty ;
+               rdfs:domain :GeneticVariant ;
+               rdfs:range xsd:string ;
+               rdfs:label "has NCBI Gene ID"@en ,
+                          "tiene ID NCBI Gene"@es .
+
+
+###  http://ontobci.org/ontology#hasNComponent
+:hasNComponent rdf:type owl:DatatypeProperty ;
+               rdfs:domain :TNMStage ;
+               rdfs:range xsd:string ;
+               rdfs:label "has N component"@en ,
+                          "tiene componente N"@es .
+
+
+###  http://ontobci.org/ontology#hasOMIMID
+:hasOMIMID rdf:type owl:DatatypeProperty ;
+           rdfs:domain :GeneticVariant ;
+           rdfs:range xsd:string ;
+           rdfs:label "has OMIM ID"@en ,
+                      "tiene ID OMIM"@es .
+
+
+###  http://ontobci.org/ontology#hasTComponent
+:hasTComponent rdf:type owl:DatatypeProperty ;
+               rdfs:domain :TNMStage ;
+               rdfs:range xsd:string ;
+               rdfs:label "has T component"@en ,
+                          "tiene componente T"@es .
+
+
+###  http://ontobci.org/ontology#hasdbSNPID
+:hasdbSNPID rdf:type owl:DatatypeProperty ;
+            rdfs:domain :GeneticVariant ;
+            rdfs:range xsd:string ;
+            rdfs:label "has dbSNP ID"@en ,
+                       "tiene ID dbSNP"@es .
+
+
+###  http://ontobci.org/ontology#ihcScore
+:ihcScore rdf:type owl:DatatypeProperty ;
+          rdfs:domain :HER2Status ;
+          rdfs:range xsd:string ;
+          rdfs:label "IHC score"@en ,
+                     "puntuación IHC"@es .
+
+
+###  http://ontobci.org/ontology#standardizedValue
+:standardizedValue rdf:type owl:DatatypeProperty ;
+                   rdfs:range xsd:string ;
+                   rdfs:label "standardized value"@en ,
+                              "valor estandarizado"@es .
+
+
+###  http://ontobci.org/ontology#tnmEdition
+:tnmEdition rdf:type owl:DatatypeProperty ;
+            rdfs:domain :TNMStage ;
+            rdfs:range xsd:string ;
+            rdfs:label "TNM edition"@en ,
+                       "edición TNM"@es .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://ontobci.org/ontology#BRCA1Variant
+:BRCA1Variant rdf:type owl:Class ;
+              rdfs:subClassOf :GeneticVariant .
+
+
+###  http://ontobci.org/ontology#BRCA2Variant
+:BRCA2Variant rdf:type owl:Class ;
+              rdfs:subClassOf :GeneticVariant .
+
+
+###  http://ontobci.org/ontology#Biomarker
+:Biomarker rdf:type owl:Class ;
+           rdfs:subClassOf :MolecularEntity ;
+           rdfs:label "Biomarcador"@es ,
+                      "Biomarker"@en .
+
+
+###  http://ontobci.org/ontology#BreastCancerDiagnosis
+:BreastCancerDiagnosis rdf:type owl:Class ;
+                       rdfs:subClassOf :ClinicalEntity ;
+                       rdfs:label "Breast Cancer Diagnosis"@en ,
+                                  "Diagnóstico de Cáncer de Mama"@es ;
+                       skos:definition "A diagnosis of malignant neoplasm of the breast"@en .
+
+
+###  http://ontobci.org/ontology#CancerStage
+:CancerStage rdf:type owl:Class ;
+             rdfs:subClassOf :ClinicalEntity ;
+             :fhirProfile "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tnm-stage-group" ;
+             rdfs:label "Cancer Stage"@en ,
+                        "Estadio del Cáncer"@es .
+
+
+###  http://ontobci.org/ontology#Chemotherapy
+:Chemotherapy rdf:type owl:Class ;
+              rdfs:subClassOf :Treatment ;
+              :hasSNOMEDMapping <http://snomed.info/id/367336001> ;
+              rdfs:label "Chemotherapy"@en ,
+                         "Quimioterapia"@es .
+
+
+###  http://ontobci.org/ontology#ClinicalEntity
+:ClinicalEntity rdf:type owl:Class ;
+                rdfs:subClassOf :OncoBreatsCancer ;
+                rdfs:label "Clinical Entity"@en ,
+                           "Entidad Clínica"@es .
+
+
+###  http://ontobci.org/ontology#EstrogenReceptorNegative
+:EstrogenReceptorNegative rdf:type owl:Class ;
+                          rdfs:subClassOf :EstrogenReceptorStatus ;
+                          rdfs:label "ER Negative"@en ,
+                                     "RE Negativo"@es .
+
+
+###  http://ontobci.org/ontology#EstrogenReceptorPositive
+:EstrogenReceptorPositive rdf:type owl:Class ;
+                          rdfs:subClassOf :EstrogenReceptorStatus .
+
+
+###  http://ontobci.org/ontology#EstrogenReceptorStatus
+:EstrogenReceptorStatus rdf:type owl:Class ;
+                        rdfs:subClassOf :ReceptorStatus ;
+                        :hasLOINCCode <http://loinc.org/rdf#16112-5> ;
+                        :hasSNOMEDMapping <http://snomed.info/id/441117001> ;
+                        rdfs:label "Estado de Receptor de Estrógeno"@es ,
+                                   "Estrogen Receptor Status"@en .
+
+
+###  http://ontobci.org/ontology#GeneticVariant
+:GeneticVariant rdf:type owl:Class ;
+                rdfs:subClassOf :MolecularEntity ;
+                :fhirProfile "http://hl7.org/fhir/uv/genomics-reporting/StructureDefinition/variant" ;
+                rdfs:label "Genetic Variant"@en ,
+                           "Variante Genética"@es .
+
+
+###  http://ontobci.org/ontology#HER2Negative
+:HER2Negative rdf:type owl:Class ;
+              rdfs:subClassOf :HER2Status .
+
+
+###  http://ontobci.org/ontology#HER2Positive
+:HER2Positive rdf:type owl:Class ;
+              rdfs:subClassOf :HER2Status .
+
+
+###  http://ontobci.org/ontology#HER2PositiveTumor
+:HER2PositiveTumor rdf:type owl:Class ;
+                   owl:equivalentClass [ rdf:type owl:Restriction ;
+                                         owl:onProperty :hasReceptorStatus ;
+                                         owl:someValuesFrom :HER2Positive
+                                       ] .
+
+
+###  http://ontobci.org/ontology#HER2Status
+:HER2Status rdf:type owl:Class ;
+            rdfs:subClassOf :ReceptorStatus ;
+            :hasLOINCCode <http://loinc.org/rdf#48676-1> ;
+            :hasNCItMapping ncit:C18462 ;
+            :hasSNOMEDMapping <http://snomed.info/id/427685000> ;
+            rdfs:label "Estado HER2"@es ,
+                       "HER2 Status"@en .
+
+
+###  http://ontobci.org/ontology#HormoneTherapy
+:HormoneTherapy rdf:type owl:Class ;
+                rdfs:subClassOf :Treatment ;
+                rdfs:label "Hormone Therapy"@en ,
+                           "Terapia Hormonal"@es .
+
+
+###  http://ontobci.org/ontology#InvasiveDuctalCarcinoma
+:InvasiveDuctalCarcinoma rdf:type owl:Class ;
+                         rdfs:subClassOf :BreastCancerDiagnosis ;
+                         :fhirProfile "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-primary-cancer-condition" ;
+                         :hasICD11Code "2C60.0" ;
+                         :hasNCItMapping ncit:C4194 ;
+                         :hasSNOMEDMapping <http://snomed.info/id/82711006> ;
+                         rdfs:label "Carcinoma Ductal Invasivo"@es ,
+                                    "Invasive Ductal Carcinoma"@en .
+
+
+###  http://ontobci.org/ontology#MolecularEntity
+:MolecularEntity rdf:type owl:Class ;
+                 rdfs:subClassOf :OncoBreatsCancer ;
+                 rdfs:label "Entidad Molecular"@es ,
+                            "Molecular Entity"@en .
+
+
+###  http://ontobci.org/ontology#OncoBreatsCancer
+:OncoBreatsCancer rdf:type owl:Class ;
+                  rdfs:comment "Root class for all BCIO concepts"@en ;
+                  rdfs:label "BCIO Concept"@en ,
+                             "Concepto BCIO"@es .
+
+
+###  http://ontobci.org/ontology#PathogenicVariant
+:PathogenicVariant rdf:type owl:Class ;
+                   rdfs:subClassOf :GeneticVariant .
+
+
+###  http://ontobci.org/ontology#Pertuzumab
+:Pertuzumab rdf:type owl:Class ;
+            rdfs:subClassOf :TargetedTherapy .
+
+
+###  http://ontobci.org/ontology#ProgesteroneReceptorNegative
+:ProgesteroneReceptorNegative rdf:type owl:Class ;
+                              rdfs:subClassOf :ProgesteroneReceptorStatus ;
+                              rdfs:label "PR Negative"@en ,
+                                         "RP Negativo"@es .
+
+
+###  http://ontobci.org/ontology#ProgesteroneReceptorPositive
+:ProgesteroneReceptorPositive rdf:type owl:Class ;
+                              rdfs:subClassOf :ProgesteroneReceptorStatus ;
+                              rdfs:label "PR Positive"@en ,
+                                         "RP Positivo"@es .
+
+
+###  http://ontobci.org/ontology#ProgesteroneReceptorStatus
+:ProgesteroneReceptorStatus rdf:type owl:Class ;
+                            rdfs:subClassOf :ReceptorStatus ;
+                            :hasLOINCCode <http://loinc.org/rdf#16113-3> ;
+                            :hasSNOMEDMapping <http://snomed.info/id/441118006> ;
+                            rdfs:label "Estado de Receptor de Progesterona"@es ,
+                                       "Progesterone Receptor Status"@en .
+
+
+###  http://ontobci.org/ontology#ReceptorStatus
+:ReceptorStatus rdf:type owl:Class ;
+                rdfs:subClassOf :Biomarker ;
+                :fhirProfile "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-tumor-marker-test" ;
+                rdfs:label "Estado de Receptor"@es ,
+                           "Receptor Status"@en .
+
+
+###  http://ontobci.org/ontology#Stage_IA
+:Stage_IA rdf:type owl:Class ;
+          rdfs:subClassOf :TNMStage .
+
+
+###  http://ontobci.org/ontology#Stage_IIB
+:Stage_IIB rdf:type owl:Class ;
+           rdfs:subClassOf :TNMStage ;
+           rdfs:label "Estadio IIB"@es ,
+                      "Stage IIB"@en .
+
+
+###  http://ontobci.org/ontology#TNMStage
+:TNMStage rdf:type owl:Class ;
+          rdfs:subClassOf :CancerStage .
+
+
+###  http://ontobci.org/ontology#Tamoxifen
+:Tamoxifen rdf:type owl:Class ;
+           rdfs:subClassOf :HormoneTherapy .
+
+
+###  http://ontobci.org/ontology#TargetedTherapy
+:TargetedTherapy rdf:type owl:Class ;
+                 rdfs:subClassOf :Treatment ;
+                 rdfs:label "Targeted Therapy"@en ,
+                            "Terapia Dirigida"@es .
+
+
+###  http://ontobci.org/ontology#Trastuzumab
+:Trastuzumab rdf:type owl:Class ;
+             rdfs:subClassOf :TargetedTherapy .
+
+
+###  http://ontobci.org/ontology#Treatment
+:Treatment rdf:type owl:Class ;
+           rdfs:subClassOf :TreatmentEntity ;
+           :fhirProfile "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-related-medication-administration" ;
+           rdfs:label "Tratamiento"@es ,
+                      "Treatment"@en .
+
+
+###  http://ontobci.org/ontology#TreatmentEntity
+:TreatmentEntity rdf:type owl:Class ;
+                 rdfs:subClassOf :OncoBreatsCancer ;
+                 rdfs:label "Entidad de Tratamiento"@es ,
+                            "Treatment Entity"@en .
+
+
+###  http://ontobci.org/ontology#TripleNegativeBreastCancer
+:TripleNegativeBreastCancer rdf:type owl:Class ;
+                            owl:equivalentClass [ owl:intersectionOf ( :BreastCancerDiagnosis
+                                                                       [ rdf:type owl:Restriction ;
+                                                                         owl:onProperty :hasReceptorStatus ;
+                                                                         owl:someValuesFrom :EstrogenReceptorNegative
+                                                                       ]
+                                                                       [ rdf:type owl:Restriction ;
+                                                                         owl:onProperty :hasReceptorStatus ;
+                                                                         owl:someValuesFrom :HER2Negative
+                                                                       ]
+                                                                       [ rdf:type owl:Restriction ;
+                                                                         owl:onProperty :hasReceptorStatus ;
+                                                                         owl:someValuesFrom :ProgesteroneReceptorNegative
+                                                                       ]
+                                                                     ) ;
+                                                  rdf:type owl:Class
+                                                ] ;
+                            rdfs:subClassOf :BreastCancerDiagnosis ;
+                            :hasNCItMapping ncit:C77908 ;
+                            :hasSNOMEDMapping <http://snomed.info/id/431396003> ;
+                            rdfs:label "Cáncer de Mama Triple Negativo"@es ,
+                                       "Triple Negative Breast Cancer"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://ontobci.org/ontology#BRCA1Variant
+:BRCA1Variant rdf:type owl:NamedIndividual ;
+              :hasGeneSymbol "BRCA1" ;
+              :hasNCBIGeneID "672" ;
+              :hasOMIMID "113705" .
+
+
+###  http://ontobci.org/ontology#BRCA1_c68_69delAG
+:BRCA1_c68_69delAG rdf:type owl:NamedIndividual ,
+                            :BRCA1Variant ,
+                            :PathogenicVariant ;
+                   :acmgClassification "Pathogenic" ;
+                   :clinicalSignificance "Pathogenic" ;
+                   :hasClinVarID "VCV000017666" ;
+                   :hasHGVS "NM_007294.3:c.68_69delAG" ;
+                   :hasdbSNPID "rs80357906" ;
+                   dcterms:source "ClinVar" ;
+                   rdfs:label "BRCA1 c.68_69delAG" .
+
+
+###  http://ontobci.org/ontology#BRCA2Variant
+:BRCA2Variant rdf:type owl:NamedIndividual ;
+              :hasGeneSymbol "BRCA2" ;
+              :hasNCBIGeneID "675" ;
+              :hasOMIMID "600185" .
+
+
+###  http://ontobci.org/ontology#EstrogenReceptorPositive
+:EstrogenReceptorPositive rdf:type owl:NamedIndividual .
+
+
+###  http://ontobci.org/ontology#HER2Negative
+:HER2Negative rdf:type owl:NamedIndividual ;
+              :ihcScore "0" ,
+                        "1+" ;
+              :standardizedValue "Negative" .
+
+
+###  http://ontobci.org/ontology#HER2Positive
+:HER2Positive rdf:type owl:NamedIndividual ;
+              :ihcScore "3+" ;
+              :standardizedValue "Positive" .
+
+
+###  http://ontobci.org/ontology#HER2PositiveTumor
+:HER2PositiveTumor rdf:type owl:NamedIndividual .
+
+
+###  http://ontobci.org/ontology#PathogenicVariant
+:PathogenicVariant rdf:type owl:NamedIndividual ;
+                   :acmgClassification "Pathogenic" ;
+                   :clinicalSignificance "Pathogenic" .
+
+
+###  http://ontobci.org/ontology#Patient_001_Diagnosis
+:Patient_001_Diagnosis rdf:type owl:NamedIndividual ,
+                                :InvasiveDuctalCarcinoma ;
+                       :hasReceptorStatus :Patient_001_ER_Positive ,
+                                          :Patient_001_HER2_Positive ,
+                                          :Patient_001_PR_Positive ;
+                       :hasStage :Patient_001_Stage ;
+                       dcterms:created "2025-06-15"^^xsd:date ;
+                       rdfs:label "Patient 001 Diagnosis" .
+
+
+###  http://ontobci.org/ontology#Patient_001_ER_Positive
+:Patient_001_ER_Positive rdf:type owl:NamedIndividual ,
+                                  :EstrogenReceptorPositive ;
+                         :standardizedValue "Positive" ;
+                         :hasLOINCCode <http://loinc.org/rdf#16112-5> ;
+                         rdfs:label "Patient 001 ER Status" .
+
+
+###  http://ontobci.org/ontology#Patient_001_HER2_Positive
+:Patient_001_HER2_Positive rdf:type owl:NamedIndividual ,
+                                    :HER2Positive ;
+                           :ihcScore "3+" ;
+                           :standardizedValue "Positive" ;
+                           rdfs:label "Patient 001 HER2 Status" .
+
+
+###  http://ontobci.org/ontology#Patient_001_PR_Positive
+:Patient_001_PR_Positive rdf:type owl:NamedIndividual ,
+                                  :ProgesteroneReceptorPositive ;
+                         :standardizedValue "Positive" ;
+                         rdfs:label "Patient 001 PR Status" .
+
+
+###  http://ontobci.org/ontology#Patient_001_Stage
+:Patient_001_Stage rdf:type owl:NamedIndividual ,
+                            :Stage_IIB ;
+                   :hasMComponent "M0" ;
+                   :hasNComponent "N1" ;
+                   :hasTComponent "T2" ;
+                   :tnmEdition "AJCC 8th Edition" ;
+                   rdfs:label "Patient 001 Stage" .
+
+
+###  http://ontobci.org/ontology#Patient_001_Treatment_Plan
+:Patient_001_Treatment_Plan rdf:type owl:NamedIndividual ,
+                                     :Treatment ;
+                            :indicatedFor :Patient_001_Diagnosis ;
+                            rdfs:comment "HER2-positive treatment regimen with trastuzumab and pertuzumab"@en ;
+                            rdfs:label "Patient 001 Treatment Plan" .
+
+
+###  http://ontobci.org/ontology#Pertuzumab
+:Pertuzumab rdf:type owl:NamedIndividual ;
+            :targetBiomarker :HER2Positive .
+
+
+###  http://ontobci.org/ontology#Stage_IA
+:Stage_IA rdf:type owl:NamedIndividual ;
+          :hasMComponent "M0" ;
+          :hasNComponent "N0" ;
+          :hasTComponent "T1" .
+
+
+###  http://ontobci.org/ontology#TNMStage
+:TNMStage rdf:type owl:NamedIndividual ;
+          :tnmEdition "AJCC 8th Edition" .
+
+
+###  http://ontobci.org/ontology#Tamoxifen
+:Tamoxifen rdf:type owl:NamedIndividual ;
+           :targetBiomarker :EstrogenReceptorPositive .
+
+
+###  http://ontobci.org/ontology#Trastuzumab
+:Trastuzumab rdf:type owl:NamedIndividual ;
+             :indicatedFor :HER2PositiveTumor ;
+             :targetBiomarker :HER2Positive .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :Trastuzumab ;
+   owl:annotatedProperty :indicatedFor ;
+   owl:annotatedTarget :HER2PositiveTumor ;
+   :evidenceLevel "Level I" ;
+   rdfs:comment "Trastuzumab is standard of care for HER2+ breast cancer"@en
+ ] .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+:BRCA1Variant rdfs:label "BRCA1 Variant"@en ,
+                         "Variante BRCA1"@es .
+
+
+:BRCA2Variant rdfs:label "BRCA2 Variant"@en ,
+                         "Variante BRCA2"@es .
+
+
+:EstrogenReceptorPositive :threshold [ :minPercentage 1
+                                     ] ;
+                          rdfs:label "ER Positive"@en ,
+                                     "RE Positivo"@es .
+
+
+:HER2Negative rdfs:label "HER2 Negative"@en ,
+                         "HER2 Negativo"@es .
+
+
+:HER2Positive :fishRatio [ :minValue 2.0
+                         ] ;
+              rdfs:label "HER2 Positive"@en ,
+                         "HER2 Positivo"@es .
+
+
+:PathogenicVariant rdfs:label "Pathogenic Variant"@en ,
+                              "Variante Patogénica"@es .
+
+
+:Pertuzumab :hasRxNormCode "1298944" ;
+            rdfs:label "Pertuzumab"@en ,
+                       "Pertuzumab"@es .
+
+
+:Stage_IA rdfs:label "Estadio IA"@es ,
+                     "Stage IA"@en .
+
+
+:TNMStage :hasNCItMapping ncit:C48232 ;
+          :hasSNOMEDMapping <http://snomed.info/id/385388004> ;
+          rdfs:label "Estadio TNM"@es ,
+                     "TNM Stage"@en .
+
+
+:Tamoxifen :hasRxNormCode "10324" ;
+           rdfs:label "Tamoxifen"@en ,
+                      "Tamoxifeno"@es .
+
+
+:Trastuzumab :hasNCItMapping ncit:C1647 ;
+             :hasRxNormCode "224905" ;
+             :hasSNOMEDMapping <http://snomed.info/id/386918005> ;
+             rdfs:label "Trastuzumab"@en ,
+                        "Trastuzumab"@es .
+
+
+:fishRatio rdfs:label "FISH ratio"@en ,
+                      "ratio FISH"@es .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
