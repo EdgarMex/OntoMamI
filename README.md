@@ -1,7 +1,7 @@
-# OncoSemInt: A Semantic Interoperability Framework for Oncology – Breast Cancer Case Study
+# OntoMamI: An Interoperability Breast Cancer Ontologies - Case Study
 <img width="82" height="20" alt="image" src="https://github.com/user-attachments/assets/ac236fd9-5abd-4ba8-ab42-0e8dd848fb22" />
 
-OncoSemInt is a framework prototype of an operational ontology between ontologies for breast cancer, integrated with BI-RADS and connected to HL7 FHIR Foundation. The goal is to facilitate interoperability between clinical ontologies and digital medical images (DICOM and others), with support for FHIR R5 serialization, DICOM reading, synthetic record generation, reasoning, and SPARQL queries.
+OntoMamI is a framework prototype of an operational ontology between ontologies for breast cancer, integrated with DICOM files and images classifated using the BI-RADS standard. The goal is to facilitate interoperability between clinical ontologies and digital medical images (DICOM and others), with support for FHIR R5 serialization, DICOM reading, synthetic record generation, reasoning, and SPARQL queries.
 
 Table of Contents
 Objective and Scope
